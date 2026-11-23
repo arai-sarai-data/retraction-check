@@ -1,0 +1,41 @@
+{
+ "repo": "arai-sarai-data/retraction-check",
+ "title": "撤回論文の汚染チェッカー",
+ "title_en": "Retraction Contamination Checker",
+ "short": "撤回論文チェッカー",
+ "short_en": "Retraction Checker",
+ "tagline": "撤回された論文が、今も「根拠」として引用されている。撤回後の引用を、論文・雑誌・日本の機関ごとに数えました。",
+ "tagline_en": "Retracted papers are still being cited as evidence. We counted post-retraction citations by paper, journal and Japanese institution.",
+ "color": "#343a40",
+ "langs": [
+  "ja",
+  "en"
+ ],
+ "hashtags": [
+  "研究公正",
+  "RetractionWatch"
+ ],
+ "search": {
+  "placeholder": "論文名・DOI・雑誌名で検索",
+  "placeholder_en": "Search by title, DOI or journal"
+ },
+ "about": {
+  "what": "Retraction Watch Database（Crossrefが無料公開）の撤回論文と、OpenAlexの引用データを突き合わせ、撤回の後も引用され続けている論文を示します。自分が引用しようとしている論文が撤回されていないかの確認にも使えます。",
+  "method": "撤回日の1年後以降に出版された論文からの引用を「撤回後の引用」としています。",
+  "notes": [
+   "撤回に批判的に触れた引用も含まれます。",
+   "研究者個人の名前は表示しません（論文・雑誌・機関の単位）。",
+   "撤回の理由は Retraction Watch の分類で、不正とは限りません。"
+  ]
+ },
+ "about_en": {
+  "what": "We match retracted papers in the Retraction Watch Database (made open by Crossref) with OpenAlex citation data to show retracted papers that keep being cited. You can also check whether a paper you plan to cite has been retracted.",
+  "method": "Citations from works published one year or more after the retraction date are counted as post-retraction citations.",
+  "notes": [
+   "Citations that critically mention the retraction are included.",
+   "We do not show individual researchers' names (paper, journal and institution level only).",
+   "Retraction reasons follow Retraction Watch's classification and do not necessarily imply misconduct."
+  ]
+ },
+ "contact": "arai-sarai-data@proton.me"
+}
