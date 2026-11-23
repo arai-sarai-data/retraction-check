@@ -12,15 +12,25 @@ RW_GIT = "https://gitlab.com/crossref/retraction-watch-data.git"   # 毎営業�
 RW_OLD = "https://api.labs.crossref.org/data/retractionwatch"       # 旧配布先（更新停止。予備）
 API = "https://api.openalex.org"
 MAILTO = os.environ.get("OPENALEX_MAILTO", "arai-sarai-data@proton.me")
-TOP = int(os.environ.get("RW_TOP", "1500"))     # 撤回後の引用を数える論文数（被引用数の多い順）
-DEEP = int(os.environ.get("RW_DEEP", "400"))    # 引用元の雑誌・日本の機関まで調べる論文数
+TOP = int(os.environ.get("RW_TOP", "800"))     # 撤回後の引用を数える論文数（被引用数の多い順）
+DEEP = int(os.environ.get("RW_DEEP", "200"))    # 引用元の雑誌・日本の機関まで調べる論文数
 
 
 def oa(path, **p):
+    """OpenAlex。結果は raw/cache に保存し、次回の実行で続きから取れるようにする。429（回数制限）は長めに待って再試行。"""
+    import hashlib, time
     p.setdefault("mailto", MAILTO)
     if os.environ.get("OPENALEX_KEY"):
         p["api_key"] = os.environ["OPENALEX_KEY"]
-    return oc.get(API + path, params=p, as_json=True)
+    key = "oa/" + hashlib.sha1((path + repr(sorted(p.items()))).encode()).hexdigest() + ".json"
+    for i in range(6):
+        try:
+            return oc.get(API + path, params=p, as_json=True, cache=key, retries=2)
+        except Exception as e:
+            if "429" not in str(e) or i == 5:
+                raise
+            oc.log("openalex 429, waiting", 60 * (i + 1), "s")
+            time.sleep(60 * (i + 1))
 
 
 def rw_csv():
