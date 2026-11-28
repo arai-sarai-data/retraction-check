@@ -1,7 +1,7 @@
 name: update
 on:
   schedule:
-    - cron: "17 18 1 * *"   # 毎月2日 03:17（日本時間）
+    - cron: "41 16 * * *"   # 毎日 01:41（日本時間）。OpenAlexの1日の上限内で少しずつ取り、途中結果は raw/cache に残して翌日続きから
   workflow_dispatch: {}
   push:
     branches: [main]
@@ -34,6 +34,7 @@ jobs:
           restore-keys: raw-cache-
       - run: pip install -r requirements.txt
       - name: 公開データを取得・検証・集計
+        continue-on-error: true   # 1日の上限で止まっても、取れた分のキャッシュは保存して翌日に続ける
         run: python fetch.py
         env:
           OC_WAIT: "1.5"
